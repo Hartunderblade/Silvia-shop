@@ -1,0 +1,15 @@
+@import url(./reset.css);
+
+body {
+    font-family: "Onest", serif;
+    max-width: 1540px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@font-face {
+    font-family: "Onest", serif;
+    src: url('../assets/fonts/Onest/Onest-VariableFont_wght.ttf');
+    font-weight: normal;
+    font-style: normal;
+}

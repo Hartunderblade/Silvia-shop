@@ -1,33 +1,45 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from '@/views/HomePage.vue';
-import UserPage from '@/views/UserPage.vue';
-import LoginPage from '@/views/LoginPage.vue';
-import RegisterPage from '@/views/RegisterPage.vue';
+import { createRouter, createWebHistory } from "vue-router";
+import HomePage from "@/views/HomePage.vue";
+import UserPage from "@/views/UserPage.vue";
+import LoginPage from "@/views/LoginPage.vue";
+import RegisterPage from "@/views/RegisterPage.vue";
+import AboutPage from "@/page/AboutPage.vue";
+import CatalogPage from "@/page/CatalogPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path: "/",
+      name: "home",
       component: HomePage,
+      children: [
+        {
+          path: "/about",
+          component: AboutPage,
+        },
+        {
+          path: "/catalog",
+          component: CatalogPage,
+        }
+      ],
     },
     {
-      path: '/user',
-      name: 'User',
+      path: "/user",
+      name: "User",
       component: UserPage,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
     },
     {
-      path: '/login',
-      name: 'Login',
-      component: LoginPage
+      path: "/login",
+      name: "Login",
+      component: LoginPage,
     },
     {
-      path: '/register',
-      name: 'Register',
-      component: RegisterPage
-    }
+      path: "/register",
+      name: "Register",
+      component: RegisterPage,
+    },
     // {
     //   path: '/about',
     //   name: 'about',
@@ -37,6 +49,6 @@ const router = createRouter({
     //   component: () => import('../views/AboutView.vue'),
     // },
   ],
-})
+});
 
-export default router
+export default router;
