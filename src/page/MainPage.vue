@@ -1,5 +1,7 @@
 <script setup>
 import { RouterLink } from "vue-router";
+import Slider from '@/components/Slider.vue';
+import Products from '@/components/Products.vue';
 </script>
 
 <template>
@@ -53,6 +55,10 @@ import { RouterLink } from "vue-router";
         </div>
       </div>
     </header>
+    <main>
+    <Slider/>
+    <Products/>
+    </main>
   </div>
 </template>
 
