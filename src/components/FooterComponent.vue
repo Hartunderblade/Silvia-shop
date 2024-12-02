@@ -52,12 +52,15 @@ import { RouterLink, RouterView } from "vue-router";
 
 <style scoped lang="scss">
 .footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  // bottom: 0;
   background: #1e1e1e;
   color: #ffff;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
+  margin-top:2rem;
+
+  padding: 1rem 190px;
 }
 
 .social {

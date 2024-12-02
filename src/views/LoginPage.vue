@@ -1,17 +1,17 @@
 <script setup>
-import { RouterLink } from 'vue-router'
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { RouterLink } from "vue-router";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
-const username = ref('');
-const password = ref('');
+const username = ref("");
+const password = ref("");
 
 const login = () => {
   // Здесь должна быть логика аутентификации
   // Например, отправка запроса на сервер
-  localStorage.setItem('userName', username.value);
-  router.push('/user');
+  localStorage.setItem("userName", username.value);
+  router.push("/user");
 };
 </script>
 
@@ -19,21 +19,34 @@ const login = () => {
   <div class="wrapper">
     <div class="navigation">
       <h1 class="navigation__logo">Silvia</h1>
-      <router-link to="/register"><p class="navigation__link">Зарегистрироваться</p></router-link>
+      <router-link to="/register"
+        ><p class="navigation__link">Зарегистрироваться</p></router-link
+      >
     </div>
-    
+
     <div class="login">
       <h1 class="login__title">Вход</h1>
       <form class="login-form" @submit.prevent="login">
-        <input class="login-form__name" type="text" v-model="username" placeholder="Ваше имя" />
-        <input class="login-form__password" type="password" v-model="password" placeholder="Пароль" />
-        <button class="login-form__button" @click="login" type="submit">Войти</button>
+        <input
+          class="login-form__name"
+          type="text"
+          v-model="username"
+          placeholder="Ваше имя"
+        />
+        <input
+          class="login-form__password"
+          type="password"
+          v-model="password"
+          placeholder="Пароль"
+        />
+        <button class="login-form__button" @click="login" type="submit">
+          Войти
+        </button>
       </form>
     </div>
     <div class="image">
-      <img src="@/assets/img/bg-auth.jpg" alt="">
+      <img src="@/assets/img/bg-auth.jpg" alt="" />
     </div>
-
   </div>
 </template>
 
@@ -49,7 +62,7 @@ const login = () => {
 
   &__logo {
     font-weight: 400;
-font-size: 40px;
+    font-size: 40px;
   }
 
   &__link {
@@ -60,8 +73,8 @@ font-size: 40px;
 }
 
 .login {
-    position: absolute;
-    top:calc(50% - 260px);
+  position: absolute;
+  top: calc(50% - 260px);
 
   &__title {
     font-weight: 600;
@@ -120,7 +133,7 @@ font-size: 40px;
   bottom: 0;
 
   img {
-    height: 952px;
+    height: 915px;
   }
 }
 </style>

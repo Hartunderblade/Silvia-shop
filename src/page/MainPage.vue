@@ -2,6 +2,7 @@
 import { RouterLink } from "vue-router";
 import Slider from '@/components/Slider.vue';
 import Products from '@/components/Products.vue';
+import FooterComponent from '@/components/FooterComponent.vue';
 </script>
 
 <template>
@@ -59,6 +60,9 @@ import Products from '@/components/Products.vue';
     <Slider/>
     <Products/>
     </main>
+    <footer>
+<!-- <FooterComponent/> -->
+    </footer>
   </div>
 </template>
 

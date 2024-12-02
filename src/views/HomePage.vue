@@ -33,7 +33,7 @@ import FooterComponent from '@/components/FooterComponent.vue'
             <RouterView />
         </main>
         <footer>
-<!-- <FooterComponent/> -->
+<FooterComponent/>
         </footer>
     </div>
 </template>
