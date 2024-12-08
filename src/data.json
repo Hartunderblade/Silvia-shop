@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "name": "Колье с гематитом",
+        "category": "Колье",
+        "price": 2500,
+        "popular": 5,
+        "description": "Элегантное колье с натуральным гематитом.",
+        "image": "/src/assets/img/product-1.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Серебряный браслет",
+        "category": "Браслеты",
+        "price": 3000,
+        "popular": 8,
+        "description": "Серебряный браслет с изысканным дизайном.",
+        "image": "/src/assets/img/product-1.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Золотые серьги",
+        "category": "Серьги",
+        "price": 5000,
+        "popular": 10,
+        "description": "Золотые серьги с алмазной огранкой.",
+        "image": "/src/assets/img/product-1.jpg"
+    },
+    {
+        "id": 1,
+        "name": "Колье с гематитом",
+        "category": "Колье",
+        "price": 2500,
+        "popular": 5,
+        "description": "Элегантное колье с натуральным гематитом.",
+        "image": "/src/assets/img/product-1.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Серебряный браслет",
+        "category": "Браслеты",
+        "price": 3000,
+        "popular": 8,
+        "description": "Серебряный браслет с изысканным дизайном.",
+        "image": "/src/assets/img/product-1.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Золотые серьги",
+        "category": "Серьги",
+        "price": 5000,
+        "popular": 10,
+        "description": "Золотые серьги с алмазной огранкой.",
+        "image": "/src/assets/img/product-1.jpg"
+    }
+]

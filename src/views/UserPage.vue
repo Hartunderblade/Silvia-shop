@@ -1,21 +1,42 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
+import CartPage from '@/page/CartPage.vue';
+import Footer from '@/components/FooterComponent.vue';
+import productsData from "@/data.json";
 
 const router = useRouter();
+
+const cart = ref([]);
+
+
+
+// // Открытие окна
+// const openModal = () => {
+//   isModalVisible.value = true;
+// };
+
+
+
 const userName = ref(localStorage.getItem("userName") || "Пользователь");
 
 const logout = () => {
   localStorage.removeItem("userName");
   router.push("/");
 };
+
+
+
+
 </script>
 
 <template>
   <div class="user">
     <header>
       <nav class="nav">
-        <router-link to="/"><h2 class="nav__logo">Silvia</h2></router-link>
+        <router-link to="/">
+          <h2 class="nav__logo">Silvia</h2>
+        </router-link>
         <div class="nav-link">
           <router-link to="/about">
             <p>О нас</p>
@@ -28,7 +49,7 @@ const logout = () => {
           </router-link>
         </div>
         <div class="nav-auth">
-          <router-link to="/basket">
+          <router-link to="/cart">
             <img src="@/assets/icons/basket.svg" alt="" />
           </router-link>
           <router-link to="/profile">
@@ -37,6 +58,14 @@ const logout = () => {
         </div>
       </nav>
     </header>
+    <main>
+      <RouterView />
+      
+
+    </main>
+    <Footer>
+      <FooterComponent />
+    </Footer>
   </div>
   <!-- <div>
     <h1>Добро пожаловать, {{ userName }}!</h1>
@@ -45,6 +74,19 @@ const logout = () => {
 </template>
 
 <style scoped lang="scss">
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  background-color: #ffff;
+}
+
+.modal {}
+
 .nav {
   display: flex;
   justify-content: space-between;
@@ -86,7 +128,8 @@ const logout = () => {
   }
 }
 
-img, p {
+img,
+p {
   font-weight: 500;
   font-size: 22px;
   color: #1e1e1e;

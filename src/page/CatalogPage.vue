@@ -1,63 +1,74 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+import { defineProps, defineEmits } from "vue";
 import { RouterLink } from "vue-router";
+import productsData from '@/data.json';
+import { useRouter } from 'vue-router'
+import CartPage from '@/page/CartPage.vue';
 
-const products = ref([
-  {
-    id: 1,
-    name: "Колье с гематитом",
-    category: "Колье",
-    price: 2500,
-    popular: 5,
-    description: "Элегантное колье с натуральным гематитом.",
-    image: "src/assets/img/product-1.jpg",
+const router = useRouter()
+
+const products = ref(productsData);
+
+const cart = ref([]);
+
+// Управление видимостью модального окна
+const isModalVisible = ref(false);
+
+// Закрытие окна
+const closeModal = () => {
+  isModalVisible.value = false;
+};
+
+const sortedProducts = ref([...products.value]);
+
+const sortOption = ref("All");
+
+watch(sortOption, (newOption) => {
+  if (newOption === "alphabet") {
+    // Сортировка по алфавиту
+    sortedProducts.value = [...products.value].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  } else if (newOption === "priceLow") {
+    // Сначала дешевые
+    sortedProducts.value = [...products.value].sort((a, b) => a.price - b.price);
+  } else if (newOption === "priceHigh") {
+    // Сначала дорогие
+    sortedProducts.value = [...products.value].sort((a, b) => b.price - a.price);
+  } else {
+    // Без сортировки (All)
+    sortedProducts.value = [...products.value];
+  }
+});
+
+// Добавление товара в корзину
+const addToCart = (product) => {
+  const existingProduct = cart.value.find((item) => item.id === product.id);
+  if (existingProduct) {
+    existingProduct.quantity += 1;
+  } else {
+    cart.value.push({ ...product, quantity: 1 });
+  }
+};
+
+// Удаление товара из корзины
+const removeFromCart = (productId) => {
+  cart.value = cart.value.filter((item) => item.id !== productId);
+};
+
+// Расчет общей стоимости товаров в корзине
+const cartTotal = ref(0);
+watch(
+  cart,
+  () => {
+    cartTotal.value = cart.value.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
   },
-  {
-    id: 2,
-    name: "Серебряный браслет",
-    category: "Браслеты",
-    price: 3000,
-    popular: 8,
-    description: "Серебряный браслет с изысканным дизайном.",
-    image: "src/assets/img/product-1.jpg",
-  },
-  {
-    id: 3,
-    name: "Золотые серьги",
-    category: "Серьги",
-    price: 5000,
-    popular: 10,
-    description: "Золотые серьги с алмазной огранкой.",
-    image: "src/assets/img/product-1.jpg",
-  },
-  {
-    id: 1,
-    name: "Колье с гематитом",
-    category: "Колье",
-    price: 2500,
-    popular: 5,
-    description: "Элегантное колье с натуральным гематитом.",
-    image: "src/assets/img/product-1.jpg",
-  },
-  {
-    id: 2,
-    name: "Серебряный браслет",
-    category: "Браслеты",
-    price: 3000,
-    popular: 8,
-    description: "Серебряный браслет с изысканным дизайном.",
-    image: "src/assets/img/product-1.jpg",
-  },
-  {
-    id: 3,
-    name: "Золотые серьги",
-    category: "Серьги",
-    price: 5000,
-    popular: 10,
-    description: "Золотые серьги с алмазной огранкой.",
-    image: "src/assets/img/product-1.jpg",
-  },
-]);
+  { deep: true }
+);
 
 </script>
 
@@ -83,8 +94,11 @@ const products = ref([
     </div>
     <div class="filters">
       <div class="filter">
-        <select style="font-weight: 500; font-size: 20px; line-height: 121%;" >
-          <option value="popular">По популярности</option>
+        <select 
+                v-model="sortOption"
+                style="font-weight: 500; font-size: 20px; line-height: 121%;" 
+        >
+          <option value="All">Все</option>
           <option value="alphabet">По алфавиту</option>
           <option value="priceLow">Снчачала дешевле</option>
           <option value="priceHigh">Снчачала дoроже</option>
@@ -92,20 +106,35 @@ const products = ref([
       </div>
     </div>
     <div class="products">
-      <div class="product" v-for="product in products" :key="product.id">
-        <img class="product__img" :src="product.image" alt="" />
+      <div  class="product" v-for="product in products" :key="product.id">
+        <div @click="router.push(`/product/${product.id}`)" style="color: #000;">
+          <img class="product__img" :src="product.image" alt="" />
         <div class="product-info">
           <p class="product-info__subtitle">{{ product.category }}</p>
           <p class="product-info__title">{{ product.name }}</p>
           <p class="product-info__price">{{ product.price }} ₽</p>
         </div>
-        <button class="product__add">В корзину</button>
+        </div>
+        
+        <button class="product__add" @click.prevent="addToCart(product)">В корзину</button>
+      </div>
+    </div>
+    
+    <div>
+      <div >
+        <CartPage :cart="cart" :cart-total="cartTotal" @remove="removeFromCart" />
       </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+
+
+
+.modal-close {
+  cursor: pointer;
+}
 .sale {
   border-bottom: 1px solid #000;
 
@@ -142,6 +171,7 @@ const products = ref([
 
   .product {
     cursor: pointer;
+    color: #000;
     &__img {
       width: 360px;
       height: 360px;

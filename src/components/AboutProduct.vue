@@ -1,24 +1,23 @@
 <script setup>
-import { ref } from "vue";
-import { RouterLink } from "vue-router";
+import { useRoute } from 'vue-router';
+import { ref, onBeforeMount } from 'vue';
+import products from '@/data.json';
 
-const products = ref([
-  {
-    id: 1,
-    name: "HIGHER-AURA hematite choker",
-    category: "чокеры",
-    price: 2500,
-    article: 19000290983,
-    description:
-      "Чокер из гематита Higher-Aura – это изысканное украшение, которое придает образу неповторимый стиль. Чокер изготовлен из настоящего гематита размером 4 и 6 мм. Вставка в виде сердца из гипоаллергенного бижутерного сплава и родированная фурнитура обеспечивает долговечность украшению. Размер украшения 36 см + 5см удлиняющей цепочки. Собственное производство Higher-Aura гарантирует высокое качество каждого изделия, подчеркивая его эксклюзивность и стиль.",
-    image: "src/assets/img/product-1.jpg",
-  },
-]);
+const product = ref(null);
+const route = useRoute();
+
+const { id } = route.params;
+
+onBeforeMount(() => {
+  product.value = products.find(c => c.id === parseInt(id))
+})
+
+
 </script>
 
 <template>
-  <div class="product">
-    <div v-for="(product, index) in products" :key="index" class="card">
+  <div v-if="product" class="product">
+    <div class="card">
       <img class="card__image" :src="product.image" :alt="product.name" />
       <div class="card-description">
         <p class="card-description__title">{{ product.name }}</p>
@@ -26,24 +25,30 @@ const products = ref([
         <button class="card-description__add">Добавить в корзину</button>
       </div>
     </div>
-    <div class="info" v-for="(product, index) in products" :key="index">
-        <p class="info__title">ОПИСАНИЕ</p>
-        <p class="info__name">{{ product.name }}</p>
-        <p class="info__article">артикул: {{ product.article }}</p>
-        <p class="info__description">{{ product.description }}</p>
-        <div class="star">
-            <svg width="369" height="369" viewBox="0 0 369 369" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M184.5 0L213.201 155.799L369 184.5L213.201 213.201L184.5 369L155.799 213.201L0 184.5L155.799 155.799L184.5 0Z" fill="#1E1E1E" />
-</svg>
-        </div>
+    <div class="info">
+      <p class="info__title">ОПИСАНИЕ</p>
+      <p class="info__name">{{ product.name }}</p>
+      <p class="info__article">артикул: {{ product.article }}</p>
+      <p class="info__description">{{ product.description }}</p>
+      <div class="star">
+        <svg width="369" height="369" viewBox="0 0 369 369" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M184.5 0L213.201 155.799L369 184.5L213.201 213.201L184.5 369L155.799 213.201L0 184.5L155.799 155.799L184.5 0Z"
+            fill="#1E1E1E" />
+        </svg>
+      </div>
     </div>
+  </div>
+  <div v-else>
+    <h1>Ничего не найдено</h1>
   </div>
 </template>
 
 <style scoped lang="scss">
 .product {
-    position: relative;
+  position: relative;
 }
+
 .card {
   display: flex;
   column-gap: 20px;
@@ -87,8 +92,8 @@ const products = ref([
 }
 
 .info {
-    margin-top: 5rem;
-    
+  margin-top: 5rem;
+
   &__title {
     font-weight: 500;
     font-size: 18px;
